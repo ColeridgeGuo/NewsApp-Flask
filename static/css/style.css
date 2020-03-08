@@ -1,0 +1,32 @@
+#tabs {
+    float: left;
+}
+#news {
+    float: left;
+    margin-left: 100px;
+}
+#top-slides {
+    float: left;
+}
+#top-wc {
+    float: left;
+    margin-left: 50px;
+}
+#top_content {
+    margin-bottom: 50px;
+}
+.headlines {
+    display: table;
+}
+.hl-article {
+    display: table-cell;
+}
+.hl-article img {
+    margin: 10px;
+    width: 200px;
+    height: 100px;
+}
+.cnn-fox-header {
+    margin-bottom: 0;
+    text-align: center;
+}
