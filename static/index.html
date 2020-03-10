@@ -7,20 +7,60 @@
 </head>
 <body>
     <div id="tabs">
-        <button class="tab" id="tab1" onclick="show_news_or_search('news')">
+        <button class="tab active" id="tab-news" onclick="show_news_or_search(this)">
             Google News
         </button>
-        <button class="tab" id="tab2" onclick="show_news_or_search('search')">
+        <button class="tab" id="tab-search" onclick="show_news_or_search(this)">
             Search
         </button>
     </div>
     <div id="news">
-        <div id="top-content">
-            <div id="top-slides">
-                Slide show
-            </div>
-            <div id="top-wc">
-                Word Cloud
+        <div id="top-row">
+            <a href="" target="_blank">
+                <div class="top-col">
+                    <div id="slideshow-container" class="top-card">
+                        <div class="generic-headline">
+                            <img src="" class="gh-img">
+                            <div class="text-block">
+                                <h2 class="gh-title"></h2>
+                                <p class="gh-desc"></p>
+                            </div>
+                        </div>
+                        <div class="generic-headline">
+                            <img src="" class="gh-img">
+                            <div class="text-block">
+                                <h2 class="gh-title"></h2>
+                                <p class="gh-desc"></p>
+                            </div>
+                        </div>
+                        <div class="generic-headline">
+                            <img src="" class="gh-img">
+                            <div class="text-block">
+                                <h2 class="gh-title"></h2>
+                                <p class="gh-desc"></p>
+                            </div>
+                        </div>
+                        <div class="generic-headline">
+                            <img src="" class="gh-img">
+                            <div class="text-block">
+                                <h2 class="gh-title"></h2>
+                                <p class="gh-desc"></p>
+                            </div>
+                        </div>
+                        <div class="generic-headline">
+                            <img src="" class="gh-img">
+                            <div class="text-block">
+                                <h2 class="gh-title"></h2>
+                                <p class="gh-desc"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+            <div class="top-col">
+                <div id="word_cloud_container" class="top-card">
+
+                </div>
             </div>
         </div>
         <div id="cnn-fox">

@@ -12,16 +12,18 @@ def index():
     return app.send_static_file("index.html")
 
 
-@app.route('/generic', methods=['GET'])
+@app.route('/generic/', methods=['GET'])
 def get_top_headlines():
-    top_headlines = newsapi.get_top_headlines()
-    return jsonify(top_headlines['articles'])
+    generic_headlines = newsapi.get_top_headlines(language='en')
+    generic_headlines = generic_headlines['articles']
+    generic_headlines = get_valid_articles(generic_headlines)[0:5]
+    return jsonify(articles=generic_headlines)
 
 
-@app.route('/cnn-fox', methods=['GET'])
+@app.route('/cnn-fox/', methods=['GET'])
 def get_cnn_fox_headlines():
-    cnn_headlines = newsapi.get_top_headlines(sources='cnn')
-    fox_headlines = newsapi.get_top_headlines(sources='fox-news')
+    cnn_headlines = newsapi.get_top_headlines(sources='cnn', language='en')
+    fox_headlines = newsapi.get_top_headlines(sources='fox-news', language='en')
     
     cnn_headlines = cnn_headlines['articles']
     fox_headlines = fox_headlines['articles']

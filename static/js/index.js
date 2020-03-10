@@ -4,7 +4,7 @@ function load_everything() {
 }
 
 function load_generic_headlines() {
-    fetch("/generic")
+    fetch("/generic/")
         .then(response => {
             return response.json();
         })
@@ -17,7 +17,7 @@ function load_generic_headlines() {
 }
 
 function load_cnn_fox_headlines() {
-    fetch("/cnn-fox")
+    fetch("/cnn-fox/")
         .then(response => {
             return response.json();
         })
@@ -30,7 +30,27 @@ function load_cnn_fox_headlines() {
 }
 
 function display_generic_headlines(jsonObj) {
+    let slides = document.getElementsByClassName("generic-headline");
+    let text_title = document.getElementsByClassName("gh-title");
+    let text_desc = document.getElementsByClassName("gh-desc");
+    for (let i = 0; i < slides.length; i++) { // hide everything at the beginning
+        slides[i].style.display = "none";
+    }
+    slide_index ++;
+    // reset slide_index (start the slideshow over)
+    if (slide_index === slides.length) {slide_index = 1}
 
+    // link entire div to news
+    let slide = document.getElementById("top-row").firstElementChild;
+    slide.href = jsonObj[slide_index-1].url;
+
+    // set image, title, description
+    slides[slide_index-1].getElementsByTagName("img")[0].src =
+        jsonObj[slide_index-1].urlToImage;
+    text_title[slide_index-1].innerHTML = jsonObj[slide_index-1].title;
+    text_desc[slide_index-1].innerHTML = jsonObj[slide_index-1].description;
+    slides[slide_index-1].style.display = "block";
+    setTimeout(function() {display_generic_headlines(jsonObj)}, 4000);
 }
 
 function display_cnn_fox_headlines(jsonObj) {
@@ -49,17 +69,24 @@ function display_cnn_fox_headlines(jsonObj) {
     }
 }
 
-function show_news_or_search(option) {
+function show_news_or_search(element) {
     let news = document.getElementById("news");
     let search = document.getElementById("search");
-    if (option === "news") {
-        news.style.display = 'block';
-        search.style.display = 'none';
-    }
-    else if (option === "search") {
-        search.style.display = 'block';
-        news.style.display = 'none';
+    if (!element.className.includes("active")) {
+        element.className += " active";
+        if (element.id === "tab-news") {
+            document.getElementById("tab-search").className = "tab";
+            news.style.display = 'block';
+            search.style.display = 'none';
+        }
+        else {
+            document.getElementById("tab-news").className = "tab";
+            search.style.display = 'block';
+            news.style.display = 'none';
+        }
     }
 }
 
 window.onload = load_everything;
+document.getElementById("search").style.display = 'none';
+var slide_index = 0;

@@ -7,7 +7,7 @@ body:after {
     clear: both;
 }
 #tabs {
-    margin-top: 2%;
+    margin-top: 25px;
     text-align: center;
     float: left;
     width: 25%;
@@ -19,21 +19,21 @@ body:after {
     padding: 16px 20px;
     text-align: center;
     font-size: 16px;
-    /*cursor: pointer;*/
+    cursor: pointer;
     border: #aaaaaa solid 1px;
 }
 .tab:hover {
     background-color: #3c963c;
     color: white;
 }
-.tab:active {
+.tab.active {
     background-color: #434343;
     color: white;
 }
-#tab1 {
+#tab-news {
     border-radius: 5px 5px 0 0;
 }
-#tab2 {
+#tab-search {
     margin-top: -1px;
     border-radius: 0 0 5px 5px;
 }
@@ -41,12 +41,45 @@ body:after {
     float: left;
     width: 60%;
 }
-#top-slides {
+.top-col {
     float: left;
+    width: 50%;
+    /* TODO: make slideshow wider and wordcloud narrower */
+    margin-bottom: 0;
 }
-#top-wc {
-    float: left;
-    margin-left: 50px;
+.generic-headline {
+    position: relative;
+}
+.generic-headline .gh-img {
+    width: 100%;
+    height: 250px;
+    bottom: 0;
+    margin-bottom: -5px;
+}
+.text-block {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.3);
+    color: white;
+    bottom: 0;
+    margin-bottom: 0;
+}
+.text-block p {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+.text-block h2 {
+    font-size: 18px;
+}
+#top-row {
+    margin: 25px 1% 5% 1%;
+}
+#top-row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+.top-card {
+    text-align: center;
 }
 #top-content {
     margin-bottom: 50px;
