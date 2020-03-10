@@ -1,6 +1,5 @@
 from flask import Flask, jsonify
 from newsapi import NewsApiClient
-import json
 
 app = Flask(__name__)
 
