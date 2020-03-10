@@ -7,11 +7,15 @@
 </head>
 <body>
     <div id="tabs">
-        <div>Google News</div>
-        <div>Search</div>
+        <button class="tab" id="tab1" onclick="show_news_or_search('news')">
+            Google News
+        </button>
+        <button class="tab" id="tab2" onclick="show_news_or_search('search')">
+            Search
+        </button>
     </div>
     <div id="news">
-        <div id="top_content">
+        <div id="top-content">
             <div id="top-slides">
                 Slide show
             </div>
@@ -22,19 +26,102 @@
         <div id="cnn-fox">
             <h1 class="cnn-fox-header">CNN</h1>
             <div id="cnn-news" class="headlines">
-                <a class="hl"><div class="hl-article"></div></a>
-                <a class="hl"><div class="hl-article"></div></a>
-                <a class="hl"><div class="hl-article"></div></a>
-                <a class="hl"><div class="hl-article"></div></a>
+                <a class="hl-link" target="_blank">
+                    <div class="hl-col">
+                        <div class="hl-card">
+                            <div class='hl-text-container'>
+                                <img src="">
+                                <h3 class='hl-title'></h3>
+                                <p></p>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a class="hl-link" target="_blank">
+                    <div class="hl-col">
+                        <div class="hl-card">
+                            <div class='hl-text-container'>
+                                <img src="">
+                                <h3 class='hl-title'></h3>
+                                <p></p>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a class="hl-link" target="_blank">
+                    <div class="hl-col">
+                        <div class="hl-card">
+                            <div class='hl-text-container'>
+                                <img src="">
+                                <h3 class='hl-title'></h3>
+                                <p></p>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a class="hl-link" target="_blank">
+                    <div class="hl-col">
+                        <div class="hl-card">
+                            <div class='hl-text-container'>
+                                <img src="">
+                                <h3 class='hl-title'></h3>
+                                <p></p>
+                            </div>
+                        </div>
+                    </div>
+                </a>
             </div>
             <h1 class="cnn-fox-header">Fox News</h1>
             <div id="fox-news" class="headlines">
-                <a class="hl"><div class="hl-article"></div></a>
-                <a class="hl"><div class="hl-article"></div></a>
-                <a class="hl"><div class="hl-article"></div></a>
-                <a class="hl"><div class="hl-article"></div></a>
+                <a class="hl-link" target="_blank">
+                    <div class="hl-col">
+                        <div class="hl-card">
+                            <div class='hl-text-container'>
+                                <img src="">
+                                <h3 class='hl-title'></h3>
+                                <p></p>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a class="hl-link" target="_blank">
+                    <div class="hl-col">
+                        <div class="hl-card">
+                            <div class='hl-text-container'>
+                                <img src="">
+                                <h3 class='hl-title'></h3>
+                                <p></p>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a class="hl-link" target="_blank">
+                    <div class="hl-col">
+                        <div class="hl-card">
+                            <div class='hl-text-container'>
+                                <img src="">
+                                <h3 class='hl-title'></h3>
+                                <p></p>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a class="hl-link" target="_blank">
+                    <div class="hl-col">
+                        <div class="hl-card">
+                            <div class='hl-text-container'>
+                                <img src="">
+                                <h3 class='hl-title'></h3>
+                                <p></p>
+                            </div>
+                        </div>
+                    </div>
+                </a>
             </div>
         </div>
+    </div>
+    <div id="search">
+        search
     </div>
 </body>
 <script type="application/javascript" src="static/js/index.js"></script>
