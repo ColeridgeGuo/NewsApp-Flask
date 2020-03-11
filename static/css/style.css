@@ -22,12 +22,12 @@ body:after {
     cursor: pointer;
     border: #aaaaaa solid 1px;
 }
-.tab:hover {
-    background-color: #3c963c;
-    color: white;
-}
 .tab.active {
     background-color: #434343;
+    color: white;
+}
+.tab:hover {
+    background-color: #3c963c;
     color: white;
 }
 #tab-news {
@@ -43,9 +43,20 @@ body:after {
 }
 .top-col {
     float: left;
-    width: 50%;
     /* TODO: make slideshow wider and wordcloud narrower */
     margin-bottom: 0;
+}
+#top-col-news {
+    width: 55%;
+    margin-right: 10px;
+}
+#top-col-wc {
+    width: 35%;
+    display: block;
+    margin-left: 10px;
+}
+svg {
+    background-color: #f2f2f2;
 }
 .generic-headline {
     position: relative;

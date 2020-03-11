@@ -1,5 +1,7 @@
 from flask import Flask, jsonify
 from newsapi import NewsApiClient
+import re
+from collections import Counter
 
 app = Flask(__name__)
 
@@ -12,7 +14,7 @@ def index():
 
 
 @app.route('/generic/', methods=['GET'])
-def get_top_headlines():
+def get_generic_headlines():
     generic_headlines = newsapi.get_top_headlines(language='en')
     generic_headlines = generic_headlines['articles']
     generic_headlines = get_valid_articles(generic_headlines)[0:5]
@@ -31,6 +33,32 @@ def get_cnn_fox_headlines():
     hl = cnn_headlines + fox_headlines
     
     return jsonify(articles=hl)
+
+
+@app.route('/word-cloud/', methods=['GET'])
+def get_word_cloud_words():
+    top_headlines = newsapi.get_top_headlines(language='en', page_size=100)
+    
+    # extract titles
+    titles = [article["title"] for article in top_headlines["articles"]]
+    # extract words from titles
+    title_words = [re.findall(r'[a-zA-Z]+', t) for t in titles]
+    words = []
+    for title in title_words:
+        words.extend(title)
+    
+    # remove stop words
+    stop_words = []
+    with open("stopwords_en.txt", 'r') as file:
+        for line in file:
+            stop_words.append(line.rstrip())
+            
+    words = [word for word in words if word.lower() not in stop_words]
+    cnt = Counter()
+    for word in words:
+        cnt[word] += 1
+    word_cloud_words = [{"word": count[0], "size": count[1]*3} for count in cnt.most_common(30)]
+    return jsonify(words=word_cloud_words)
 
 
 def get_valid_articles(articles):
