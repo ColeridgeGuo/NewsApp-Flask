@@ -1,7 +1,44 @@
 function load_everything() {
+    // display only news section when first loaded
+    document.getElementById("search").style.display = 'none';
+
+    // define news/search tabs onclick behavior
+    let tabs = document.getElementsByClassName("tab");
+    for (let tab of tabs) {
+        tab.onclick = function () {
+            show_news_or_search(tab.id);
+        }
+    }
+
+    // load headlines slideshows, word cloud, CNN & Fox News
     load_generic_headlines();
     load_word_cloud_words();
     load_cnn_fox_headlines();
+
+    // set default dates of the date selectors
+    set_default_date();
+
+    // load initial sources when category=all
+    load_sources("all");
+
+    // define category drop-down menu onclick behavior
+    let category = document.getElementById("category");
+    category.onchange = function () {
+        load_sources(category.options[category.selectedIndex].value);
+    };
+
+    // define submit onclick behavior
+    document.getElementById("search-button").onclick = function (event) {
+        event.preventDefault(); // prevent the page from refreshing
+
+        // only submit the form when all fields have valid inputs
+        if (document.getElementById("search-form").reportValidity()) {
+            load_search_results();
+        }
+    };
+
+    // define reset onlick behavior
+    document.getElementById("clear-button").onclick = reset_form;
 }
 
 function load_generic_headlines() {
@@ -38,7 +75,54 @@ function load_word_cloud_words() {
         .then(data => {
            display_word_cloud(data.words);
         }).catch(err => {
-        console.log(err);
+            console.log(err);
+        })
+}
+
+function load_sources(value) {
+    fetch(`/get-sources/${value}`)
+        .then(response => {
+            return response.json();
+        })
+        .then(data => {
+            display_sources(data);
+        })
+        .catch(err => {
+            console.log(err);
+        })
+}
+
+function load_search_results() {
+    let keyword = document.getElementById("keyword").value,
+        from_date = document.getElementById("from-date").value,
+        to_date = document.getElementById("to-date").value,
+        category = document.getElementById("category").value,
+        source = document.getElementById("source").value;
+
+    // check date range is valid
+    let start_date = new Date(from_date), finish_date = new Date(to_date);
+    if (finish_date < start_date) {
+        alert("Incorrect time.");
+        return;
+    }
+
+    fetch(`/search/?kw=${keyword}&from=${from_date}&to=${to_date}&cat=${category}&src=${source}`)
+        .then(
+            function(response) {
+                if (response.status !== 200) {
+                    console.log(response);
+                    return;
+                }
+
+                response.json()
+                    .then(data => {
+                        display_search_results(data);
+                        console.log(data);
+                    });
+            }
+        )
+        .catch(err => {
+            console.log(err);
         })
 }
 
@@ -123,24 +207,78 @@ function display_word_cloud(jsonObj){
     }
 }
 
-function show_news_or_search(element) {
-    let news = document.getElementById("news");
-    let search = document.getElementById("search");
-    if (!element.className.includes("active")) {
-        element.className += " active";
-        if (element.id === "tab-news") {
-            document.getElementById("tab-search").className = "tab";
-            news.style.display = 'block';
-            search.style.display = 'none';
-        }
-        else {
-            document.getElementById("tab-news").className = "tab";
-            search.style.display = 'block';
-            news.style.display = 'none';
-        }
+function display_sources(jsonObj) {
+    let source_drop_down = document.getElementById("source");
+    // remove all options
+    for (let i = source_drop_down.length - 1; i > 0; i--) {
+        source_drop_down.remove(i);
+    }
+    // add new sources for the category
+    for (let i = 0; i < jsonObj.source_names.length; i++) {
+    //for (let source of jsonObj.sources_names){
+        let option = document.createElement("option");
+        option.text = jsonObj.source_names[i];
+        option.value = jsonObj.source_ids[i];
+        source_drop_down.add(option);
     }
 }
 
+function display_search_results(jsonObj) {
+    let results_div = document.getElementById("search-results");
+
+    // check error
+    if (jsonObj.status === "error") {
+        alert(jsonObj.message);
+        return;
+    }
+    let articles = jsonObj.articles;
+    // if no article returned
+    if (articles.length === 0 && results_div.children.length === 0) {
+        let no_results = document.createElement("p");
+        no_results.appendChild(document.createTextNode("No results"));
+        results_div.appendChild(no_results);
+        return;
+    }
+    // if less than 5 articles
+    if (articles.length <= 5) {
+
+    }
+    return;
+}
+
+function show_news_or_search(clicked_tab_id) {
+    let news_div = document.getElementById("news");
+    let search_div = document.getElementById("search");
+
+    let tab_news = document.getElementById("tab-news");
+    let tab_search = document.getElementById("tab-search");
+
+    if (tab_news.className.includes("active") && clicked_tab_id === "tab-search") {
+        tab_news.className = "tab";
+        tab_search.className = "tab active";
+        search_div.style.display = 'block';
+        news_div.style.display = 'none';
+    }
+    else if (tab_search.className.includes("active") && clicked_tab_id === "tab-news") {
+        tab_news.className = "tab active";
+        tab_search.className = "tab";
+        news_div.style.display = 'block';
+        search_div.style.display = 'none';
+    }
+}
+
+function set_default_date() {
+    let curr_day = new Date();
+    let week_ago = new Date();
+    week_ago.setDate(curr_day.getDate() - 7);
+    document.getElementById("from-date").valueAsDate = week_ago;
+    document.getElementById("to-date").valueAsDate = curr_day;
+}
+
+function reset_form() {
+    document.getElementById("search-form").reset();
+    set_default_date();
+}
+
 window.onload = load_everything;
-document.getElementById("search").style.display = 'none';
 var slide_index = 0;

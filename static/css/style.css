@@ -21,6 +21,7 @@ body:after {
     font-size: 16px;
     cursor: pointer;
     border: #aaaaaa solid 1px;
+    transition: .2s;
 }
 .tab.active {
     background-color: #434343;
@@ -43,7 +44,6 @@ body:after {
 }
 .top-col {
     float: left;
-    /* TODO: make slideshow wider and wordcloud narrower */
     margin-bottom: 0;
 }
 #top-col-news {
@@ -142,4 +142,58 @@ a.hl-link:any-link {
 .hl-text-container .hl-title, .hl-text-container p {
     padding: 5px;
     margin: 10px 0 10px 0;
+}
+#search {
+    float: left;
+    width: 55%;
+    margin-top: 35px;
+}
+#search-box {
+    /*position: relative;*/
+}
+#search-form {
+    display: table;
+    background-color: #f0f0f0;
+    padding: 20px;
+    text-align: center;
+    width: 100%;
+}
+#search-kw-date label:after {
+    content: " *";
+    color: red;
+}
+#search-kw-date input {
+    border: none;
+    margin: 0 20px 0 20px;
+    height: 25px;
+    border-radius: 1px;
+}
+#search-cat-src select {
+    text-align: center;
+    margin: 0 10px 0 10px;
+}
+#search-cat-src #source {
+    width: 100px;
+}
+#search-submit input {
+    background-color: #ededed;
+    border: none;
+    width: 10%;
+    height: 25px;
+    margin: 0 1% 0 1%;
+    font-size: 10pt;
+    transition: .2s;
+}
+#search-submit input:hover {
+    background-color: #3c9634;
+    color: white;
+}
+#search-results {
+    position: relative;
+    margin-top: 5%;
+}
+#search-results p {
+    text-align: center;
+    width: 50%;
+    margin: 0 auto;
 }
