@@ -21,7 +21,7 @@ body:after {
     font-size: 16px;
     cursor: pointer;
     border: #aaaaaa solid 1px;
-    transition: .2s;
+    transition: .3s;
 }
 .tab.active {
     background-color: #434343;
@@ -182,7 +182,7 @@ a.hl-link:any-link {
     height: 25px;
     margin: 0 1% 0 1%;
     font-size: 10pt;
-    transition: .2s;
+    transition: .3s;
 }
 #search-submit input:hover {
     background-color: #3c9634;
@@ -192,8 +192,45 @@ a.hl-link:any-link {
     position: relative;
     margin-top: 5%;
 }
-#search-results p {
+#search-results .no-results {
     text-align: center;
     width: 50%;
     margin: 0 auto;
+}
+#search-results .result-card {
+    border: 1px solid #9f9b9b;
+    border-radius: 5px;
+    position: relative;
+    height: 120px;
+    background-color: #ebebeb;
+    margin: 10px 30px;
+    overflow: hidden;
+}
+#search-results .result-card:hover {
+  box-shadow:0 8px 16px 0 rgba(0,0,0,0.2);
+}
+.result-card .result-img-div {
+    float: left;
+    width: 100px;
+    height: 100%;
+}
+.result-card img {
+    margin: 20px;
+    width: 80px;
+    height: 80px;
+
+}
+.result-text-div {
+    text-overflow: ellipsis;
+    margin: 0 20px 0 120px;
+    padding: 15px;
+    height: 100px;
+}
+.result-text-div h3 {
+    margin: 0;
+    font-size: 14pt;
+}
+#search-results .result-text-div p {
+    margin: 5px 0 0 0;
+    font-size: 12pt;
 }

@@ -148,7 +148,6 @@ function load_search_results() {
                 response.json()
                     .then(data => {
                         display_search_results(data);
-                        console.log(data);
                     });
             }
         )
@@ -257,20 +256,67 @@ function display_sources(jsonObj) {
 function display_search_results(jsonObj) {
     let results_div = document.getElementById("search-results");
 
+    // clear last-time search results
+    while (results_div.firstChild) {
+        results_div.firstChild.remove();
+    }
+
     // check error
     if (jsonObj.status === "error") {
         alert(jsonObj.message);
         return;
     }
+
     let articles = jsonObj.articles;
+
     // if no article returned
     if (articles.length === 0 && results_div.children.length === 0) {
         let no_results = document.createElement("p");
+        no_results.className = "no-results";
         no_results.appendChild(document.createTextNode("No results"));
         results_div.appendChild(no_results);
         return;
     }
 
+    // display search results
+    for (article of articles) {
+        console.log(article);
+        let result_card = document.createElement("div");
+        result_card.className = "result-card";
+
+        // create img div for result card
+        let result_img_div = document.createElement("div");
+        result_img_div.className = "result-img-div";
+
+        let result_img = document.createElement("img");
+        result_img.src = article.urlToImage;
+
+        result_img_div.appendChild(result_img);
+        result_card.appendChild(result_img_div);
+
+        // create text div for result card
+        let result_text_div = document.createElement("div");
+        result_text_div.className = "result-text-div";
+
+        let result_title = document.createElement("h3");
+        result_title.textContent = article.title;
+        let result_desc = document.createElement("p");
+        let desc = article.description.slice(0, 65);
+        // remove html tags from returned description
+        desc = desc.replace(/(<\w+>)+/, "");
+        // display only one line with ellipsis cut off
+        desc = desc.replace(/\W*\w+\W*$/, "...");
+        result_desc.textContent = desc;
+
+        result_text_div.appendChild(result_title);
+        result_text_div.appendChild(result_desc);
+
+        // put img and text in result cards
+        result_card.appendChild(result_img_div);
+        result_card.appendChild(result_text_div);
+
+        // append to results_div
+        results_div.appendChild(result_card);
     }
 }
 
