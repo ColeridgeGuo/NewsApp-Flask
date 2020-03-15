@@ -175,8 +175,8 @@ function display_generic_headlines(jsonObj) {
     // set image, title, description
     slides[slide_index-1].getElementsByTagName("img")[0].src =
         jsonObj[slide_index-1].urlToImage;
-    text_title[slide_index-1].innerHTML = jsonObj[slide_index-1].title;
-    text_desc[slide_index-1].innerHTML = jsonObj[slide_index-1].description;
+    text_title[slide_index-1].textContent = jsonObj[slide_index-1].title;
+    text_desc[slide_index-1].textContent = jsonObj[slide_index-1].description;
     slides[slide_index-1].style.display = "block";
     setTimeout(function() {display_generic_headlines(jsonObj)}, 4000);
 }
@@ -192,8 +192,8 @@ function display_cnn_fox_headlines(jsonObj) {
         // populate card with image, title, description
         let hl_article = hl_articles[i];
         hl_article.getElementsByTagName("img")[0].src = jsonObj[i].urlToImage;
-        hl_article.getElementsByClassName("hl-title")[0].innerHTML = jsonObj[i].title;
-        hl_article.getElementsByTagName("p")[0].innerHTML = jsonObj[i].description;
+        hl_article.getElementsByClassName("hl-title")[0].textContent = jsonObj[i].title;
+        hl_article.getElementsByTagName("p")[0].textContent = jsonObj[i].description;
     }
 }
 
@@ -270,11 +270,8 @@ function display_search_results(jsonObj) {
         results_div.appendChild(no_results);
         return;
     }
-    // if less than 5 articles
-    if (articles.length <= 5) {
 
     }
-    return;
 }
 
 function show_news_or_search(clicked_tab_id) {
