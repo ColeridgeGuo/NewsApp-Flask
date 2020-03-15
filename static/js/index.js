@@ -43,12 +43,19 @@ function load_everything() {
 
 function load_generic_headlines() {
     fetch("/generic/")
-        .then(response => {
-            return response.json();
-        })
-        .then(data => {
-            display_generic_headlines(data.articles);
-        })
+        .then(
+            function(response) {
+                if (response.status !== 200) {
+                    console.log(response);
+                    return;
+                }
+
+                response.json()
+                    .then(data => {
+                        display_generic_headlines(data.articles);
+                    });
+            }
+        )
         .catch(err => {
             console.log(err);
         })
@@ -56,12 +63,20 @@ function load_generic_headlines() {
 
 function load_cnn_fox_headlines() {
     fetch("/cnn-fox/")
-        .then(response => {
-            return response.json();
-        })
-        .then(data => {
-            display_cnn_fox_headlines(data.articles);
-        })
+        .then(
+            function (response) {
+                if (response.status !== 200) {
+                    console.log(response);
+                    return;
+                }
+
+                response.json()
+                    .then(data => {
+                        display_cnn_fox_headlines(data.articles);
+                    });
+
+            }
+        )
         .catch(err => {
             console.log(err);
         });
@@ -69,24 +84,40 @@ function load_cnn_fox_headlines() {
 
 function load_word_cloud_words() {
     fetch("/word-cloud/")
-        .then(response => {
-        return response.json();
-        })
-        .then(data => {
-           display_word_cloud(data.words);
-        }).catch(err => {
+        .then(
+            function (response) {
+                if (response.status !== 200) {
+                    console.log(response);
+                    return;
+                }
+
+                response.json()
+                    .then(data => {
+                        display_word_cloud(data.words);
+                    });
+            }
+        )
+        .catch(err => {
             console.log(err);
         })
 }
 
 function load_sources(value) {
     fetch(`/get-sources/${value}`)
-        .then(response => {
-            return response.json();
-        })
-        .then(data => {
-            display_sources(data);
-        })
+        .then(
+            function (response) {
+                if (response.status !== 200) {
+                    console.log(response);
+                    return;
+                }
+
+                response.json()
+                    .then(data => {
+                        display_sources(data);
+                    });
+
+            }
+        )
         .catch(err => {
             console.log(err);
         })
