@@ -30,6 +30,7 @@ body:after {
 .tab:hover {
     background-color: #3c963c;
     color: white;
+    cursor: auto;
 }
 #tab-news {
     border-radius: 5px 5px 0 0;
@@ -41,6 +42,7 @@ body:after {
 #news {
     float: left;
     width: 60%;
+    margin-bottom: 5%;
 }
 .top-col {
     float: left;
@@ -147,6 +149,7 @@ a.hl-link:any-link {
     float: left;
     width: 55%;
     margin-top: 35px;
+    margin-bottom: 5%;
 }
 #search-box {
     /*position: relative;*/
@@ -207,7 +210,8 @@ a.hl-link:any-link {
     overflow: hidden;
 }
 #search-results .result-card:hover {
-  box-shadow:0 8px 16px 0 rgba(0,0,0,0.2);
+    box-shadow:0 8px 16px 0 rgba(0,0,0,0.2);
+    cursor: pointer;
 }
 .result-card .result-img-div {
     float: left;
@@ -233,4 +237,18 @@ a.hl-link:any-link {
 #search-results .result-text-div p {
     margin: 5px 0 0 0;
     font-size: 12pt;
+}
+
+#show-more-less-button {
+    display: block;
+    margin: 0 auto;
+    width: 13%;
+    height: 10%;
+    text-align: center;
+    background-color: #e6e6e6;
+    border: none;
+    padding: 5px;
+}
+#show-more-less-button:hover {
+    background-color: #3c963c;
 }

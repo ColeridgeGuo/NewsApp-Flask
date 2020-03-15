@@ -278,9 +278,19 @@ function display_search_results(jsonObj) {
         return;
     }
 
+    // create show-more and show-less divs
+    let show_less_div = document.createElement("div"),
+        show_more_div = document.createElement("div");
+
+    show_less_div.id = "show-less-div";
+    show_more_div.id = "show-more-div";
+
+    show_more_div.style.display = "none";
+    results_div.appendChild(show_less_div);
+    results_div.appendChild(show_more_div);
+
     // display search results
-    for (article of articles) {
-        console.log(article);
+    for (let i = 0; i < articles.length; i++) {
         let result_card = document.createElement("div");
         result_card.className = "result-card";
 
@@ -289,7 +299,7 @@ function display_search_results(jsonObj) {
         result_img_div.className = "result-img-div";
 
         let result_img = document.createElement("img");
-        result_img.src = article.urlToImage;
+        result_img.src = articles[i].urlToImage;
 
         result_img_div.appendChild(result_img);
         result_card.appendChild(result_img_div);
@@ -299,9 +309,9 @@ function display_search_results(jsonObj) {
         result_text_div.className = "result-text-div";
 
         let result_title = document.createElement("h3");
-        result_title.textContent = article.title;
+        result_title.textContent = articles[i].title;
         let result_desc = document.createElement("p");
-        let desc = article.description.slice(0, 65);
+        let desc = articles[i].description.slice(0, 65);
         // remove html tags from returned description
         desc = desc.replace(/(<\w+>)+/, "");
         // display only one line with ellipsis cut off
@@ -315,8 +325,35 @@ function display_search_results(jsonObj) {
         result_card.appendChild(result_img_div);
         result_card.appendChild(result_text_div);
 
-        // append to results_div
-        results_div.appendChild(result_card);
+        // TODO: implement click to expand
+
+        // append to show-more and show-less divs and then to results_div
+        if (i < 5) {
+            show_less_div.appendChild(result_card);
+        }
+        else {
+            show_more_div.appendChild(result_card);
+        }
+    }
+
+    // implement show-more show-less
+    let show_more_less = document.createElement("button");
+    show_more_less.id = "show-more-less-button";
+    show_more_less.className = "show-more";
+    show_more_less.textContent = "Show More";
+    results_div.appendChild(show_more_less);
+
+    show_more_less.onclick = function () {
+        if (show_more_less.className === "show-more") {
+            show_more_div.style.display = "block";
+            show_more_less.className = "show-less";
+            show_more_less.textContent = "Show Less";
+        }
+        else {
+            show_more_div.style.display = "none";
+            show_more_less.className = "show-more";
+            show_more_less.textContent = "Show More";
+        }
     }
 }
 
