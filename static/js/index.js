@@ -253,13 +253,27 @@ function display_sources(jsonObj) {
     }
 }
 
-function display_search_results(jsonObj) {
-    let results_div = document.getElementById("search-results");
-
+function clear_search_results(show_less_div, show_more_div, results_div) {
     // clear last-time search results
-    while (results_div.firstChild) {
-        results_div.firstChild.remove();
+    while (show_less_div.firstChild) {
+        show_less_div.firstChild.remove();
     }
+    while (show_more_div.firstChild) {
+        show_more_div.firstChild.remove();
+    }
+    if (results_div.childElementCount > 2) {
+        results_div.removeChild(results_div.children[2]);
+    }
+}
+
+function display_search_results(jsonObj) {
+    let results_div = document.getElementById("search-results"),
+        show_less_div = results_div.children[0],
+        show_more_div = results_div.children[1];
+    clear_search_results(show_less_div, show_more_div, results_div);
+
+    // hide articles in show-more by default
+    show_more_div.style.display = "none";
 
     // check error
     if (jsonObj.status === "error") {
@@ -278,14 +292,6 @@ function display_search_results(jsonObj) {
         return;
     }
 
-    // create show-more and show-less divs
-    let show_less_div = document.createElement("div"),
-        show_more_div = document.createElement("div");
-
-    show_less_div.id = "show-less-div";
-    show_more_div.id = "show-more-div";
-    show_more_div.style.display = "none"; // hide articles in show-more by default
-
     // create card display for each article
     for (let i = 0; i < articles.length; i++) {
         let result_card = create_result_card(articles[i]);
@@ -298,7 +304,7 @@ function display_search_results(jsonObj) {
 
         // add close button
         let close_sign = document.createElement("a");
-        //close_sign.href = "#";
+        close_sign.href = "#";
         close_sign.classList.add("close-sign");
         close_sign.textContent = "x";
         // define close button onclick behavior
@@ -319,29 +325,26 @@ function display_search_results(jsonObj) {
         }
     }
 
-    // put both divs in results_div
-    results_div.appendChild(show_less_div);
-    results_div.appendChild(show_more_div);
+    if (articles.length > 5) {
+        // implement show-more show-less
+        let show_more_less = document.createElement("button");
+        show_more_less.id = "show-more-less-button";
+        show_more_less.classList.add("show-more");
+        show_more_less.textContent = "Show More";
+        results_div.appendChild(show_more_less);
 
-    // implement show-more show-less
-    let show_more_less = document.createElement("button");
-    show_more_less.id = "show-more-less-button";
-    show_more_less.classList.add("show-more");
-    show_more_less.textContent = "Show More";
-    results_div.appendChild(show_more_less);
-
-    show_more_less.onclick = function () {
-        if (show_more_less.className === "show-more") {
-            show_more_div.style.display = "block";
-            show_more_less.classList.remove("show-more");
-            show_more_less.classList.add("show-less");
-            show_more_less.textContent = "Show Less";
-        }
-        else {
-            show_more_div.style.display = "none";
-            show_more_less.classList.remove("show-less");
-            show_more_less.classList.add("show-more");
-            show_more_less.textContent = "Show More";
+        show_more_less.onclick = function () {
+            if (show_more_less.className === "show-more") {
+                show_more_div.style.display = "block";
+                show_more_less.classList.remove("show-more");
+                show_more_less.classList.add("show-less");
+                show_more_less.textContent = "Show Less";
+            } else {
+                show_more_div.style.display = "none";
+                show_more_less.classList.remove("show-less");
+                show_more_less.classList.add("show-more");
+                show_more_less.textContent = "Show More";
+            }
         }
     }
 }
@@ -457,8 +460,15 @@ function set_default_date() {
 }
 
 function reset_form() {
+    // reset the form
     document.getElementById("search-form").reset();
+    // set default dates
     set_default_date();
+    // clears previous search results
+    let results_div = document.getElementById("search-results"),
+        show_less_div = results_div.children[0],
+        show_more_div = results_div.children[1];
+    clear_search_results(show_less_div, show_more_div, results_div);
 }
 
 window.onload = load_everything;
