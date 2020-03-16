@@ -440,14 +440,14 @@ function show_news_or_search(clicked_tab_id) {
     if (tab_news.classList.contains("active") && clicked_tab_id === "tab-search") {
         tab_news.classList.remove("active");
         tab_search.classList.add("active");
-        search_div.style.display = 'block';
-        news_div.style.display = 'none';
+        search_div.style.display = "flex";
+        news_div.style.display = "none";
     }
     else if (tab_search.classList.contains("active") && clicked_tab_id === "tab-news") {
         tab_news.classList.add("active");
         tab_search.classList.remove("active");
-        news_div.style.display = 'block';
-        search_div.style.display = 'none';
+        news_div.style.display = "flex";
+        search_div.style.display = "none";
     }
 }
 

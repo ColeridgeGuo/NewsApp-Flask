@@ -1,20 +1,19 @@
 * {
     box-sizing: border-box;
 }
-body:after {
-    content: "";
-    display: table;
-    clear: both;
+#body-div {
+    display: flex;
+    width: 75%;
+    margin: auto auto auto 10%;
 }
 #tabs {
     margin-top: 25px;
     text-align: center;
-    float: left;
-    width: 25%;
+    flex: 1;
 }
 .tab {
     font-family: Georgia, serif;
-    width: 60%;
+    width: 80%;
     background-color: #f2f2f2;
     padding: 16px 20px;
     text-align: center;
@@ -40,9 +39,10 @@ body:after {
     border-radius: 0 0 5px 5px;
 }
 #news {
-    float: left;
-    width: 60%;
+    display: flex;
+    flex: 3;
     margin-bottom: 5%;
+    flex-direction: column;
 }
 .top-col {
     float: left;
@@ -84,12 +84,7 @@ svg {
     font-size: 18px;
 }
 #top-row {
-    margin: 25px 1% 5% 1%;
-}
-#top-row:after {
-    content: "";
-    display: table;
-    clear: both;
+    margin: 25px 0 0 0;
 }
 .top-card {
     text-align: center;
@@ -102,25 +97,18 @@ svg {
     text-align: center;
 }
 .headlines {
+    display: flex;
     border-top: 2px dotted;
     margin-top: 5px;
     padding-top: 10px;
 }
-.headlines:after {
-    content: "";
-    display: table;
-    clear: both;
-}
 .hl-col {
-    float: left;
-    width: 25%;
+    flex: 1;
 }
 a.hl-link:any-link {
-    display: block;
     text-decoration: none;
 }
 .hl-card {
-    float: left;
     margin: 5px;
     border-style: solid;
     border-width: 1px 2px 2px 1px;
@@ -134,9 +122,9 @@ a.hl-link:any-link {
 }
 .hl-text-container {
     text-align: center;
-    width: 100%;
     /* TODO: use flexbox to auto-adjust height */
-    height: 500px; overflow: hidden;
+    height: 500px;
+    overflow: hidden;
     color: black;
     background-color: #f1f1f1;
     border-radius: 5px;
@@ -146,17 +134,18 @@ a.hl-link:any-link {
     margin: 10px 0 10px 0;
 }
 #search {
-    float: left;
-    width: 55%;
-    margin-top: 35px;
+    margin-top: 25px;
     margin-bottom: 5%;
+    flex: 3;
+    flex-direction: column;
+}
+#search-box {
+    flex: 1;
 }
 #search-form {
-    display: table;
     background-color: #f0f0f0;
     padding: 20px;
     text-align: center;
-    width: 100%;
 }
 #search-kw-date label:after {
     content: " *";
@@ -234,7 +223,7 @@ a.hl-link:any-link {
     margin: 0;
     font-size: 14pt;
 }
-.result-text-div p,a {
+.result-text-div p, .result-text-div a {
     margin: 5px 0 5px 0;
     font-size: 11pt;
 }
