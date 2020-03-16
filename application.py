@@ -112,7 +112,7 @@ def get_valid_articles(articles):
                      "publishedAt"]
     # select only articles with the required keys not null
     valid_articles = [h for h in articles
-                      if all(h[key] is not None for key in required_keys)]
+                      if all(h[key] for key in required_keys)]
     valid_articles = [h for h in valid_articles
                       if h["source"]["name"] is not None]
     return valid_articles

@@ -272,7 +272,7 @@ function display_search_results(jsonObj) {
     // if no article returned
     if (articles.length === 0 && results_div.children.length === 0) {
         let no_results = document.createElement("p");
-        no_results.className = "no-results";
+        no_results.classList.add("no-results");
         no_results.appendChild(document.createTextNode("No results"));
         results_div.appendChild(no_results);
         return;
@@ -284,77 +284,147 @@ function display_search_results(jsonObj) {
 
     show_less_div.id = "show-less-div";
     show_more_div.id = "show-more-div";
+    show_more_div.style.display = "none"; // hide articles in show-more by default
 
-    show_more_div.style.display = "none";
-    results_div.appendChild(show_less_div);
-    results_div.appendChild(show_more_div);
-
-    // display search results
+    // create card display for each article
     for (let i = 0; i < articles.length; i++) {
-        let result_card = document.createElement("div");
-        result_card.className = "result-card";
+        let result_card = create_result_card(articles[i]);
+        let result_card_expanded = create_result_card_expanded(articles[i]);
+        // define result card onclick behavior
+        result_card.onclick = function () {
+            result_card.style.display = "none";
+            result_card_expanded.style.display = "grid";
+        };
 
-        // create img div for result card
-        let result_img_div = document.createElement("div");
-        result_img_div.className = "result-img-div";
+        // add close button
+        let close_sign = document.createElement("a");
+        //close_sign.href = "#";
+        close_sign.classList.add("close-sign");
+        close_sign.textContent = "x";
+        // define close button onclick behavior
+        close_sign.onclick = function () {
+            result_card.style.display = "grid";
+            result_card_expanded.style.display = "none";
+        };
+        result_card_expanded.appendChild(close_sign);
 
-        let result_img = document.createElement("img");
-        result_img.src = articles[i].urlToImage;
-
-        result_img_div.appendChild(result_img);
-        result_card.appendChild(result_img_div);
-
-        // create text div for result card
-        let result_text_div = document.createElement("div");
-        result_text_div.className = "result-text-div";
-
-        let result_title = document.createElement("h3");
-        result_title.textContent = articles[i].title;
-        let result_desc = document.createElement("p");
-        let desc = articles[i].description.slice(0, 65);
-        // remove html tags from returned description
-        desc = desc.replace(/(<\w+>)+/, "");
-        // display only one line with ellipsis cut off
-        desc = desc.replace(/\W*\w+\W*$/, "...");
-        result_desc.textContent = desc;
-
-        result_text_div.appendChild(result_title);
-        result_text_div.appendChild(result_desc);
-
-        // put img and text in result cards
-        result_card.appendChild(result_img_div);
-        result_card.appendChild(result_text_div);
-
-        // TODO: implement click to expand
-
-        // append to show-more and show-less divs and then to results_div
+        // put first 5 articles in show-less div, and the rest in show-more div
         if (i < 5) {
             show_less_div.appendChild(result_card);
+            show_less_div.appendChild(result_card_expanded);
         }
         else {
             show_more_div.appendChild(result_card);
+            show_more_div.appendChild(result_card_expanded);
         }
     }
+
+    // put both divs in results_div
+    results_div.appendChild(show_less_div);
+    results_div.appendChild(show_more_div);
 
     // implement show-more show-less
     let show_more_less = document.createElement("button");
     show_more_less.id = "show-more-less-button";
-    show_more_less.className = "show-more";
+    show_more_less.classList.add("show-more");
     show_more_less.textContent = "Show More";
     results_div.appendChild(show_more_less);
 
     show_more_less.onclick = function () {
         if (show_more_less.className === "show-more") {
             show_more_div.style.display = "block";
-            show_more_less.className = "show-less";
+            show_more_less.classList.remove("show-more");
+            show_more_less.classList.add("show-less");
             show_more_less.textContent = "Show Less";
         }
         else {
             show_more_div.style.display = "none";
-            show_more_less.className = "show-more";
+            show_more_less.classList.remove("show-less");
+            show_more_less.classList.add("show-more");
             show_more_less.textContent = "Show More";
         }
     }
+}
+
+function create_result_card_expanded(article) {
+    let result_card = create_result_card(article);
+    result_card.classList.add("expanded");
+    result_card.style.display = "none";
+
+    /* change to detailed information */
+    let text_div = result_card.getElementsByClassName("result-text-div")[0];
+    // remove one line description
+    text_div.removeChild(text_div.childNodes[1]);
+
+    // add author info
+    let author_p = document.createElement("p");
+    author_p.innerHTML = `<b>Author:</b>  ${article.author}`;
+    text_div.appendChild(author_p);
+
+    // add source info
+    let source_p = document.createElement("p");
+    source_p.innerHTML = `<b>Source:</b>  ${article.source.name}`;
+    text_div.appendChild(source_p);
+
+    // add date info
+    let date_p = document.createElement("p");
+    let date = new Date(article.publishedAt);
+    date = `${("0" + (date.getMonth() + 1)).slice(-2)}/${("0" + date.getDate()).slice(-2)}/${date.getFullYear()}`;
+    date_p.innerHTML = `<b>Date:</b>  ${date}`;
+    text_div.appendChild(date_p);
+
+    // add detailed description
+    let desc_p = document.createElement("p");
+    desc_p.classList.add("desc-p");
+    desc_p.textContent = article.description;
+    text_div.appendChild(desc_p);
+
+    // add link to original news post
+    let link_to_news = document.createElement("a");
+    link_to_news.href = article.url;
+    link_to_news.target = "_blank";
+    link_to_news.textContent = "See Original Post";
+    text_div.appendChild(link_to_news);
+
+    return result_card;
+}
+
+function create_result_card(article) {
+    let result_card = document.createElement("div");
+    result_card.classList.add("result-card");
+
+    // create img div for result card
+    let result_img_div = document.createElement("div");
+    result_img_div.classList.add("result-img-div");
+
+    let result_img = document.createElement("img");
+    result_img.src = article.urlToImage;
+
+    result_img_div.appendChild(result_img);
+    result_card.appendChild(result_img_div);
+
+    // create text div for result card
+    let result_text_div = document.createElement("div");
+    result_text_div.classList.add("result-text-div");
+
+    let result_title = document.createElement("h3");
+    result_title.textContent = article.title;
+    let result_desc = document.createElement("p");
+    let desc = article.description.slice(0, 65);
+    // remove html tags from returned description
+    desc = desc.replace(/(<\w+>)+/, "");
+    // display only one line with ellipsis cut off
+    desc = desc.replace(/\W*\w+\W*$/, "...");
+    result_desc.textContent = desc;
+
+    result_text_div.appendChild(result_title);
+    result_text_div.appendChild(result_desc);
+
+    // put img and text in result cards
+    result_card.appendChild(result_img_div);
+    result_card.appendChild(result_text_div);
+
+    return result_card;
 }
 
 function show_news_or_search(clicked_tab_id) {
@@ -364,15 +434,15 @@ function show_news_or_search(clicked_tab_id) {
     let tab_news = document.getElementById("tab-news");
     let tab_search = document.getElementById("tab-search");
 
-    if (tab_news.className.includes("active") && clicked_tab_id === "tab-search") {
-        tab_news.className = "tab";
-        tab_search.className = "tab active";
+    if (tab_news.classList.contains("active") && clicked_tab_id === "tab-search") {
+        tab_news.classList.remove("active");
+        tab_search.classList.add("active");
         search_div.style.display = 'block';
         news_div.style.display = 'none';
     }
-    else if (tab_search.className.includes("active") && clicked_tab_id === "tab-news") {
-        tab_news.className = "tab active";
-        tab_search.className = "tab";
+    else if (tab_search.classList.contains("active") && clicked_tab_id === "tab-news") {
+        tab_news.classList.add("active");
+        tab_search.classList.remove("active");
         news_div.style.display = 'block';
         search_div.style.display = 'none';
     }

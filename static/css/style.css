@@ -151,9 +151,6 @@ a.hl-link:any-link {
     margin-top: 35px;
     margin-bottom: 5%;
 }
-#search-box {
-    /*position: relative;*/
-}
 #search-form {
     display: table;
     background-color: #f0f0f0;
@@ -203,42 +200,57 @@ a.hl-link:any-link {
 #search-results .result-card {
     border: 1px solid #9f9b9b;
     border-radius: 5px;
-    position: relative;
     height: 120px;
     background-color: #ebebeb;
     margin: 10px 30px;
-    overflow: hidden;
+    display: grid;
+    grid-template-columns: 120px auto 20px;
+    z-index: 0;
 }
 #search-results .result-card:hover {
-    box-shadow:0 8px 16px 0 rgba(0,0,0,0.2);
+    box-shadow:0 10px 25px 0 #787878;
     cursor: pointer;
+    z-index: 1;
 }
-.result-card .result-img-div {
+#search-results .result-card.expanded {
+    height: 100%;
+    overflow: auto;
+}
+.result-img-div {
     float: left;
-    width: 100px;
+    width: 120px;
     height: 100%;
 }
-.result-card img {
+.result-img-div img {
     margin: 20px;
     width: 80px;
     height: 80px;
-
 }
 .result-text-div {
-    text-overflow: ellipsis;
-    margin: 0 20px 0 120px;
     padding: 15px;
-    height: 100px;
+    height: 100%;
 }
 .result-text-div h3 {
     margin: 0;
     font-size: 14pt;
 }
-#search-results .result-text-div p {
-    margin: 5px 0 0 0;
-    font-size: 12pt;
+.result-text-div p,a {
+    margin: 5px 0 5px 0;
+    font-size: 11pt;
 }
-
+.result-text-div p.desc-p{
+    display: -webkit-box;
+    overflow : hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+}
+.close-sign {
+    font-size: 20pt;
+    font-family: Arial, sans-serif;
+    text-decoration: none;
+    margin-top: -3px;
+}
 #show-more-less-button {
     display: block;
     margin: 0 auto;
@@ -251,4 +263,5 @@ a.hl-link:any-link {
 }
 #show-more-less-button:hover {
     background-color: #3c963c;
+    color: white;
 }
