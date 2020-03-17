@@ -1,5 +1,5 @@
 .DS_Store
 .idea
 HW6_Description.pdf
-venv
+env
 __pycache__
