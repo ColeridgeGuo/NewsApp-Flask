@@ -75,6 +75,7 @@ svg {
     color: white;
     bottom: 0;
     margin-bottom: 0;
+    width: 100%;
 }
 .text-block p {
     font-size: 16px;

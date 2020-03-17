@@ -413,7 +413,7 @@ function create_result_card(article) {
     let result_title = document.createElement("h3");
     result_title.textContent = article.title;
     let result_desc = document.createElement("p");
-    let desc = article.description.slice(0, 65);
+    let desc = article.description.slice(0, 70);
     // remove html tags from returned description
     desc = desc.replace(/(<\w+>)+/, "");
     // display only one line with ellipsis cut off
