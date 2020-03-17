@@ -244,11 +244,10 @@ a.hl-link:any-link {
     display: block;
     margin: 0 auto;
     width: 13%;
-    height: 10%;
     text-align: center;
     background-color: #e6e6e6;
     border: none;
-    padding: 5px;
+    padding: 10px;
 }
 #show-more-less-button:hover {
     background-color: #3c963c;

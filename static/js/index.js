@@ -284,7 +284,7 @@ function display_search_results(jsonObj) {
     let articles = jsonObj.articles;
 
     // if no article returned
-    if (articles.length === 0 && results_div.children.length === 0) {
+    if (articles.length === 0) {
         let no_results = document.createElement("p");
         no_results.classList.add("no-results");
         no_results.appendChild(document.createTextNode("No results"));
